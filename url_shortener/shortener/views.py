@@ -26,3 +26,13 @@ def shorten_url(request):
 	else:
 		form = URLForm()
 	return render(request, 'shortener/form.html', {'form': form})
+
+
+# Vista para redireccionar el short_code
+from django.http import HttpResponseRedirect, Http404
+def shorten_url_redirect(request, short_code):
+	try:
+		url_obj = ShortenedURL.objects.get(short_code=short_code)
+		return HttpResponseRedirect(url_obj.original_url)
+	except ShortenedURL.DoesNotExist:
+		raise Http404('Shortened URL not found')
