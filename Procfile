@@ -1,1 +1,1 @@
-web: python url_shortener/manage.py migrate && gunicorn url_shortener.url_shortener.wsgi
+web: python url_shortener/manage.py collectstatic --noinput && python url_shortener/manage.py migrate && gunicorn --chdir url_shortener url_shortener.wsgi
