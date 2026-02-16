@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
     'shortener',
 ]
 
@@ -129,3 +130,22 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ] if os.path.isdir(os.path.join(BASE_DIR, 'static')) else []
 
+
+# Production security settings
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True').lower() in ('true', '1', 't')
+SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', 2592000))  # 30 days
+SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get('SECURE_HSTS_INCLUDE_SUBDOMAINS', 'True').lower() in ('true', '1', 't')
+SECURE_HSTS_PRELOAD = os.environ.get('SECURE_HSTS_PRELOAD', 'True').lower() in ('true', '1', 't')
+
+# CSRF trusted origins for Railway and local dev
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.railway.app',
+    'https://url-shortener-production-2012.up.railway.app',
+    'http://localhost:3000',
+]
+
+## creamos un nuevo directorio llamado staticfiles para almacenar los archivos estáticos recopilados por collectstatic. Esto es necesario para que WhiteNoise pueda servir los archivos estáticos en producción. Asegúrate de ejecutar python manage.py collectstatic antes de desplegar tu aplicación para recopilar todos los archivos estáticos en el directorio staticfiles.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
