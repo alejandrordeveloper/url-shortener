@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn url_shortener.wsgi
+web: python url_shortener/manage.py migrate && gunicorn url_shortener.wsgi
