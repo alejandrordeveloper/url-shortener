@@ -1,0 +1,92 @@
+body {
+	background: #f7f7f7;
+	font-family: 'Segoe UI', Arial, sans-serif;
+	color: #222;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 600px;
+	margin: 60px auto 0 auto;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+	padding: 32px 28px 28px 28px;
+}
+
+h1 {
+	text-align: center;
+	color: #2d7be5;
+	margin-bottom: 28px;
+	font-size: 2rem;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+    align-items: center;
+}
+
+input[type="url"], input[type="text"], button {
+	font-size: 1rem;
+	padding: 10px 12px;
+	border-radius: 6px;
+	border: 1px solid #d0d0d0;
+	outline: none;
+	transition: border 0.2s;
+}
+
+input[type="url"]:focus, input[type="text"]:focus {
+	border: 1.5px solid #2d7be5;
+}
+
+button {
+	background: #2d7be5;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+    width: 20%;
+	transition: background 0.2s;
+}
+
+button:hover {
+	background: #1a5bb8;
+}
+
+p, a {
+	text-align: center;
+	font-size: 1.05rem;
+}
+
+/* Centrar enlaces */
+a {
+	color: #2d7be5;
+	text-decoration: none;
+	font-weight: 500;
+	transition: color 0.2s;
+	display: block;
+	margin: 0 auto;
+	width: fit-content;
+}
+
+a:hover {
+	color: #1a5bb8;
+	text-decoration: underline;
+}
+
+.short-url {
+	display: block;
+	background: #f0f6ff;
+	color: #2d7be5;
+	padding: 10px 0;
+	border-radius: 6px;
+	margin: 18px 0 10px 0;
+	font-size: 1rem;
+	font-weight: 600;
+	text-align: center;
+	word-break: break-all;
+}

@@ -1,0 +1,28 @@
+from django.shortcuts import render, redirect
+from .forms import URLForm
+from .models import ShortenedURL
+import random
+import string
+
+def generate_short_code(length=6):
+	characters = string.ascii_letters + string.digits
+	return ''.join(random.choices(characters, k=length))
+
+def shorten_url(request):
+	if request.method == 'POST':
+		form = URLForm(request.POST)
+		if form.is_valid():
+			original_url = form.cleaned_data['original_url']
+			# Generar un código corto único
+			short_code = "alejandro-" + generate_short_code()
+			while ShortenedURL.objects.filter(short_code=short_code).exists():
+				short_code = "alejandro-" + generate_short_code()
+			# Guardar en la base de datos
+			shortened = ShortenedURL.objects.create(
+				original_url=original_url,
+				short_code=short_code
+			)
+			return render(request, 'shortener/result.html', {'shortened': shortened})
+	else:
+		form = URLForm()
+	return render(request, 'shortener/form.html', {'form': form})

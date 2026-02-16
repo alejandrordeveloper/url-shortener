@@ -1,0 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shortened URL</title>
+    <link rel="stylesheet" href="{% static 'shortener/styles.css' %}">
+</head>
+<body>
+    <h1>Shortened URL!</h1>
+    <p>Your short URL is: <a href="/{{ shortened.short_code }}">/{{ shortened.short_code }}</a></p>
+    <p>Redirects to: {{ shortened.original_url }}</p>
+    <a href="/">Shorten another URL</a>
+</body>
+</html>
