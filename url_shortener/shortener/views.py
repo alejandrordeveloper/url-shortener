@@ -13,16 +13,18 @@ def shorten_url(request):
 		form = URLForm(request.POST)
 		if form.is_valid():
 			original_url = form.cleaned_data['original_url']
-			# Generar un código corto único
-			short_code = "alejandro-" + generate_short_code()
+			# Generar un código corto único (sin prefijo)
+			short_code = generate_short_code()
 			while ShortenedURL.objects.filter(short_code=short_code).exists():
-				short_code = "alejandro-" + generate_short_code()
+				short_code = generate_short_code()
 			# Guardar en la base de datos
 			shortened = ShortenedURL.objects.create(
 				original_url=original_url,
 				short_code=short_code
 			)
-			return render(request, 'shortener/result.html', {'shortened': shortened})
+			# Pasar el dominio al template para mostrar el link completo
+			full_short_url = request.build_absolute_uri(f'/{short_code}')
+			return render(request, 'shortener/result.html', {'shortened': shortened, 'full_short_url': full_short_url})
 	else:
 		form = URLForm()
 	return render(request, 'shortener/form.html', {'form': form})
