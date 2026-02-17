@@ -7,8 +7,18 @@
 </head>
 <body>
     <h1>Shortened URL!</h1>
-    <p>Your short URL is: <a href="{{ full_short_url }}">{{ full_short_url }}</a></p>
+    <p>Your short URL is: <a href="{{ full_short_url }}">{{ full_short_url }}</a><input type="text" value="{{ full_short_url }}" readonly style="width: 300px;">
+    <button onclick="copyToClipboard()">Copy</button></p>
     <p>Redirects to: {{ shortened.original_url }}</p>
     <a href="/">Shorten another URL</a>
+    <script>
+        function copyToClipboard() {
+            var copyText = document.querySelector('input[type="text"]');
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand("copy");
+            alert("Copied the URL: " + copyText.value);
+        }
+    </script>
 </body>
 </html>
