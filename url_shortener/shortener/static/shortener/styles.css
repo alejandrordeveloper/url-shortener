@@ -93,6 +93,7 @@ a:hover {
 
 button.copy-btn {
 	background: #2d7be5;
+	width: 100px;
 	color: #fff;
 	border: none;
 	cursor: pointer;
