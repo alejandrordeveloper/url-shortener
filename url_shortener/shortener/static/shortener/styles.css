@@ -90,3 +90,19 @@ a:hover {
 	text-align: center;
 	word-break: break-all;
 }
+
+button.copy-btn {
+	background: #2d7be5;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	padding: 6px 12px;
+	border-radius: 6px;
+	transition: background 0.2s;
+}
+
+button.copy-btn:hover {
+	background: #1a5bb8;
+}
