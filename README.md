@@ -1,25 +1,36 @@
+
 # URL Shortener
 
-Simple URL Shortener web app built with Django.
-Users enter a long URL and receive a shortened version (with a custom prefix), which redirects to the original link.
-Short URLs are relative (e.g., /alejandro-abc123) and work in your local or production environment without a custom domain.
-You can share the relative short URL with anyone using your app's base address.
+This is a Django-based URL Shortener web application. Users can enter a long URL and receive a unique, short link using your custom DNS (e.g., `yourname.dpdns.org/abc123`). The app provides a modern interface and a convenient copy button for sharing the generated short URL.
+
+**Important:**
+- For production, you must use a custom DNS with your name (e.g., `alejandrodev.dpdns.org`). This ensures your short links are unique, professional, and always accessible. Do not use localhost for sharing links.
+
+## Project Overview
+
+This project allows users to:
+- Submit any valid URL via a simple form.
+- Receive a unique, short code (e.g., `/abc123`) that redirects to the original URL.
+- Instantly copy the full short link (including your DNS) with a single click.
+- Share the short link with anyone; the link will always redirect to the original destination as long as your DNS is active.
+
+The backend is built with Django 6, using a single model to store the original URL and its corresponding short code. The frontend is styled for clarity and ease of use, and includes a copy-to-clipboard button for user convenience.
 
 ## Features
 
-- Shorten any valid URL to a custom short code (with prefix).
-- Each short URL is unique and easy to share.
-- Automatic redirection from the short URL to the original URL.
-- User-friendly interface with modern styles.
-- Customizable short code prefix (e.g., includes your name).
-- Short URLs are relative (e.g., /alejandro-abc123) and can be shared by copying the link shown after shortening.
+- Custom DNS-based short links (e.g., `yourname.dpdns.org/abc123`).
+- Unique, random short codes for every URL.
+- Automatic redirection from the short link to the original URL.
+- Modern, user-friendly interface with responsive design.
+- One-click copy button for easy sharing.
 
 ## How it works
 
-1. Enter a long URL in the form.
-2. Click "Shorten" to generate a short URL.
-3. Copy the short URL (relative, e.g., /alejandro-abc123) and share it with others.
-4. Anyone visiting the short URL will be redirected to the original address.
+1. Enter a long URL in the input form.
+2. Click the "Shorten" button.
+3. The app generates a unique short code and displays the full short link using your DNS (e.g., `https://alejandrodev.dpdns.org/abc123`).
+4. Click the "Copy" button to copy the link to your clipboard.
+5. Share the link with anyone; when visited, it will redirect to the original URL.
 
 ## Technologies Used
 
@@ -29,29 +40,32 @@ You can share the relative short URL with anyone using your app's base address.
 
 ## Getting Started
 
-1. Clone the repository.
+1. Clone this repository.
 2. Install dependencies:
 	```
 	pip install -r requirements.txt
 	```
-3. Run migrations:
+3. Set up your `.env` file with your custom DNS (e.g., `alejandrodev.dpdns.org`) in `ALLOWED_HOSTS` and your production settings.
+4. Run migrations:
 	```
 	python manage.py migrate
 	```
-4. Start the development server:
+5. Collect static files:
 	```
-	python manage.py runserver
+	python manage.py collectstatic
 	```
-5. Open your browser at [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+6. Deploy to your production server (e.g., Railway, PythonAnywhere) and point your DNS to the deployed app.
+7. Access your app at `https://yourname.dpdns.org/` and start shortening URLs.
 
 ## Deployment
 
 You can deploy this project on platforms like Railway or PythonAnywhere.
-For Railway:
-1. Set up your `.env` file with production settings.
-2. Configure static files (see settings.py for STATIC_ROOT and STATICFILES_STORAGE).
-3. Use Gunicorn and WhiteNoise for production serving.
-4. Short URLs remain relative; share them using your Railway app's base address.
+
+**Recommended for production:**
+- Use a custom DNS (e.g., `alejandrodev.dpdns.org`) and set it in your `.env` as `ALLOWED_HOSTS`.
+- Configure static files as shown in `settings.py` (`STATIC_ROOT`, `STATICFILES_STORAGE`).
+- Use Gunicorn and WhiteNoise for serving in production.
+- Make sure your DNS points to your deployed app for public access.
 
 ## Author
 
