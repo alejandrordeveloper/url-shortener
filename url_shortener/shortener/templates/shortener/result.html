@@ -6,11 +6,16 @@
     <link rel="stylesheet" href="{% static 'shortener/styles.css' %}">
 </head>
 <body>
+    <div class="container">
     <h1>Shortened URL!</h1>
     <p>Your short URL is: <a href="{{ full_short_url }}">{{ full_short_url }}</a><input type="text" value="{{ full_short_url }}" readonly style="width: 300px;">
-    <button onclick="copyToClipboard()">Copy</button></p>
-    <p>Redirects to: {{ shortened.original_url }}</p>
+    <button class="copy-btn" onclick="copyToClipboard()">Copy</button></p>
+    <p>Redirects to: {{ redirect_target }}</p>
+    {% if is_stateless %}
+    <p>This short URL is generated in stateless mode for serverless hosting.</p>
+    {% endif %}
     <a href="/">Shorten another URL</a>
+    </div>
     <script>
         function copyToClipboard() {
             var copyText = document.querySelector('input[type="text"]');
