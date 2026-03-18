@@ -30,11 +30,21 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-temporary-key-change-in-pr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
 
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv('ALLOWED_HOSTS', '.vercel.app,localhost,127.0.0.1').split(',')
-    if host.strip()
+DEFAULT_ALLOWED_HOSTS = [
+    '.vercel.app',
+    'localhost',
+    '127.0.0.1',
+    'url.alejandrodev.dpdns.org',
 ]
+
+ALLOWED_HOSTS = sorted(set(
+    DEFAULT_ALLOWED_HOSTS
+    + [
+        host.strip()
+        for host in os.getenv('ALLOWED_HOSTS', '').split(',')
+        if host.strip()
+    ]
+))
 
 
 # Application definition
@@ -153,6 +163,7 @@ SECURE_HSTS_PRELOAD = os.environ.get('SECURE_HSTS_PRELOAD', 'True').lower() in (
 
 # CSRF trusted origins for Railway and local dev
 CSRF_TRUSTED_ORIGINS = [
+    'https://url.alejandrodev.dpdns.org',
     'https://*.vercel.app',
     'https://*.railway.app',
     'https://url-shortener-production-2012.up.railway.app',
