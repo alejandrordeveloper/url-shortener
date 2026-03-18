@@ -1,8 +1,8 @@
 {
   "builds": [
-    {"src": "url_shortener/asgi.py", "use": "@vercel/python"}
+    {"src": "url_shortener/url_shortener/asgi.py", "use": "@vercel/python"}
   ],
   "routes": [
-    {"src": "/(.*)", "dest": "url_shortener/asgi.py"}
+    {"src": "/(.*)", "dest": "url_shortener/url_shortener/asgi.py"}
   ]
 }
