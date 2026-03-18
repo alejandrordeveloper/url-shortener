@@ -2,26 +2,41 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shortened URL</title>
     <link rel="stylesheet" href="{% static 'shortener/styles.css' %}">
 </head>
 <body>
-    <div class="container">
-    <h1>Shortened URL!</h1>
-    <p>Your short URL is: <a href="{{ full_short_url }}">{{ full_short_url }}</a><input type="text" value="{{ full_short_url }}" readonly style="width: 300px;">
-    <button class="copy-btn" onclick="copyToClipboard()">Copy</button></p>
-    <p>Redirects to: {{ redirect_target }}</p>
-    {% if is_stateless %}
-    <p>This short URL is generated in stateless mode for serverless hosting.</p>
-    {% endif %}
-    <a href="/">Shorten another URL</a>
-    </div>
+    <main class="container">
+        <h1>Shortened URL!</h1>
+
+        <p class="url-label">Your short URL</p>
+        <a class="short-url" href="{{ full_short_url }}">{{ full_short_url }}</a>
+
+        <div class="copy-row">
+            <input id="shortUrlInput" type="text" value="{{ full_short_url }}" readonly>
+            <button class="copy-btn" type="button" onclick="copyToClipboard()">Copy</button>
+        </div>
+
+        <p class="redirect-info">Redirects to: {{ redirect_target }}</p>
+        {% if is_stateless %}
+        <p class="note">This short URL is generated in stateless mode for serverless hosting.</p>
+        {% endif %}
+
+        <a class="back-link" href="/">Shorten another URL</a>
+    </main>
     <script>
         function copyToClipboard() {
-            var copyText = document.querySelector('input[type="text"]');
+            var copyText = document.getElementById('shortUrlInput');
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(copyText.value);
+                return;
+            }
+
             copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
-            document.execCommand("copy");
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand('copy');
         }
     </script>
 </body>

@@ -1,108 +1,189 @@
+:root {
+	--bg: #eceef2;
+	--card: #ffffff;
+	--text: #1f2937;
+	--muted: #5f6b7a;
+	--primary: #2d7be5;
+	--primary-hover: #1a5bb8;
+	--border: #d6dde8;
+	--shadow: 0 12px 34px rgba(23, 35, 61, 0.14);
+}
+
+* {
+	box-sizing: border-box;
+}
+
 body {
-	background: #f7f7f7;
-	font-family: 'Segoe UI', Arial, sans-serif;
-	color: #222;
+	background: radial-gradient(circle at top right, #f5f8ff 0%, var(--bg) 42%, #e7e9ee 100%);
+	font-family: "Segoe UI", Arial, sans-serif;
+	color: var(--text);
 	margin: 0;
-	padding: 0;
+	padding: 24px;
+	min-height: 100vh;
+	display: grid;
+	place-items: center;
 }
 
 .container {
-	max-width: 600px;
-	margin: 60px auto 0 auto;
-	background: #fff;
-	border-radius: 12px;
-	box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-	padding: 32px 28px 28px 28px;
+	width: min(700px, 100%);
+	background: var(--card);
+	border-radius: 16px;
+	box-shadow: var(--shadow);
+	padding: 32px;
+	border: 1px solid rgba(214, 221, 232, 0.45);
 }
 
 h1 {
 	text-align: center;
-	color: #2d7be5;
-	margin-bottom: 28px;
-	font-size: 2rem;
+	color: var(--primary);
+	margin: 0 0 10px;
+	font-size: clamp(1.85rem, 3vw, 2.35rem);
+	line-height: 1.15;
+}
+
+.subtitle {
+	text-align: center;
+	color: var(--muted);
+	margin: 0 0 22px;
+	font-size: 1.02rem;
 }
 
 form {
 	display: flex;
 	flex-direction: column;
-	gap: 18px;
-    align-items: center;
+	gap: 16px;
 }
 
-input[type="url"], input[type="text"], button {
+form p {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+label {
+	font-weight: 600;
+	color: #334155;
+}
+
+input[type="url"],
+input[type="text"] {
+	width: 100%;
 	font-size: 1rem;
-	padding: 10px 12px;
-	border-radius: 6px;
-	border: 1px solid #d0d0d0;
+	padding: 12px 14px;
+	border-radius: 10px;
+	border: 1px solid var(--border);
 	outline: none;
-	transition: border 0.2s;
+	transition: border-color 0.2s, box-shadow 0.2s;
+	background: #fff;
 }
 
-input[type="url"]:focus, input[type="text"]:focus {
-	border: 1.5px solid #2d7be5;
+input[type="url"]:focus,
+input[type="text"]:focus {
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgba(45, 123, 229, 0.16);
 }
 
 button {
-	background: #2d7be5;
+	background: var(--primary);
 	color: #fff;
 	border: none;
 	cursor: pointer;
-	font-weight: 600;
-	letter-spacing: 0.5px;
-    width: 20%;
-	transition: background 0.2s;
+	font-weight: 700;
+	letter-spacing: 0.2px;
+	padding: 12px 20px;
+	border-radius: 10px;
+	transition: background 0.2s ease, transform 0.08s ease;
+	align-self: flex-start;
 }
 
 button:hover {
-	background: #1a5bb8;
+	background: var(--primary-hover);
 }
 
-p, a {
+button:active {
+	transform: translateY(1px);
+}
+
+.url-label {
 	text-align: center;
-	font-size: 1.05rem;
+	color: var(--muted);
+	margin: 4px 0 12px;
 }
 
-/* Centrar enlaces */
 a {
-	color: #2d7be5;
+	color: var(--primary);
 	text-decoration: none;
-	font-weight: 500;
-	transition: color 0.2s;
-	display: block;
-	margin: 0 auto;
-	width: fit-content;
+	font-weight: 600;
 }
 
 a:hover {
-	color: #1a5bb8;
 	text-decoration: underline;
 }
 
 .short-url {
 	display: block;
-	background: #f0f6ff;
-	color: #2d7be5;
-	padding: 10px 0;
-	border-radius: 6px;
-	margin: 18px 0 10px 0;
+	background: #f1f6ff;
+	color: var(--primary);
+	padding: 12px 14px;
+	border-radius: 10px;
+	margin: 0 auto 14px;
 	font-size: 1rem;
-	font-weight: 600;
+	font-weight: 700;
 	text-align: center;
-	word-break: break-all;
+	word-break: break-word;
+	overflow-wrap: anywhere;
+	max-width: 100%;
+	border: 1px solid #d5e4fb;
+}
+
+.copy-row {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 10px;
+	align-items: center;
+	margin-bottom: 14px;
 }
 
 button.copy-btn {
-	background: #2d7be5;
-	color: #fff;
-	border: none;
-	cursor: pointer;
-	font-weight: 600;
-	letter-spacing: 0.5px;
-	width: 100px;
-	border-radius: 6px;
-	transition: background 0.2s;
+	width: auto;
+	min-width: 94px;
+	align-self: stretch;
 }
 
-button.copy-btn:hover {
-	background: #1a5bb8;
+.redirect-info,
+.note {
+	text-align: center;
+	margin: 8px 0;
+	line-height: 1.45;
+}
+
+.note {
+	color: var(--muted);
+	font-size: 0.95rem;
+}
+
+.back-link {
+	display: block;
+	text-align: center;
+	margin-top: 18px;
+}
+
+@media (max-width: 640px) {
+	body {
+		padding: 14px;
+	}
+
+	.container {
+		padding: 22px 16px;
+	}
+
+	.copy-row {
+		grid-template-columns: 1fr;
+	}
+
+	button,
+	button.copy-btn {
+		width: 100%;
+	}
 }
