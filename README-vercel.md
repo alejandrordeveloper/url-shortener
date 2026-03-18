@@ -1,7 +1,7 @@
 # Despliegue en Vercel
 
-1. Instala `vercel-python` en tu entorno:
-   - Añade `vercel-python` a `requirements.txt`.
+1. No necesitas instalar `vercel-python` en `requirements.txt`.
+   - Vercel usa `@vercel/python` desde `vercel.json` para ejecutar la app.
 
 2. Configura tu proyecto para producción:
    - En `settings.py`, pon `DEBUG = False` y ajusta `ALLOWED_HOSTS`.
