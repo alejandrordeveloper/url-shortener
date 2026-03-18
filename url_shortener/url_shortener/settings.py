@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-from pathlib import Path
 import os
+import shutil
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -91,6 +91,14 @@ DATABASES = {
     }
 }
 
+# Vercel filesystem is read-only except /tmp. Copy bundled SQLite there for writable runtime.
+if os.getenv('VERCEL') == '1':
+    source_db_path = os.path.join(BASE_DIR, 'db.sqlite3')
+    runtime_db_path = '/tmp/db.sqlite3'
+    if os.path.exists(source_db_path) and not os.path.exists(runtime_db_path):
+        shutil.copy2(source_db_path, runtime_db_path)
+    DATABASES['default']['NAME'] = runtime_db_path
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -127,7 +135,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-import os
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [

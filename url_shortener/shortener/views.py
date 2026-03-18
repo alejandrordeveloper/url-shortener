@@ -19,11 +19,12 @@ def shorten_url(request):
 		form = URLForm(request.POST)
 		if form.is_valid():
 			original_url = form.cleaned_data['original_url']
-			# Generar un código corto único (sin prefijo)
-			short_code = generate_short_code()
-			while ShortenedURL.objects.filter(short_code=short_code).exists():
-				short_code = generate_short_code()
 			try:
+				# Generar un código corto único (sin prefijo)
+				short_code = generate_short_code()
+				while ShortenedURL.objects.filter(short_code=short_code).exists():
+					short_code = generate_short_code()
+
 				# En local/hosting con DB writable: persistimos normalmente.
 				shortened = ShortenedURL.objects.create(
 					original_url=original_url,
