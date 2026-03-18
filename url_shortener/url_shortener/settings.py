@@ -1,4 +1,3 @@
-
 """
 Django settings for url_shortener project.
 
@@ -19,7 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -43,11 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
     'shortener',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'url_shortener.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -121,6 +122,30 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
-STATIC_URL = 'static/'
-STATIC_ROOT = str(BASE_DIR / 'staticfiles')
 
+import os
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+] if os.path.isdir(os.path.join(BASE_DIR, 'static')) else []
+
+
+# Production security settings
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True').lower() in ('true', '1', 't')
+SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', 2592000))  # 30 days
+SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get('SECURE_HSTS_INCLUDE_SUBDOMAINS', 'True').lower() in ('true', '1', 't')
+SECURE_HSTS_PRELOAD = os.environ.get('SECURE_HSTS_PRELOAD', 'True').lower() in ('true', '1', 't')
+
+# CSRF trusted origins for Railway and local dev
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.railway.app',
+    'https://url-shortener-production-2012.up.railway.app',
+    'http://localhost:3000',
+]
+
+## creamos un nuevo directorio llamado staticfiles para almacenar los archivos estáticos recopilados por collectstatic. Esto es necesario para que WhiteNoise pueda servir los archivos estáticos en producción. Asegúrate de ejecutar python manage.py collectstatic antes de desplegar tu aplicación para recopilar todos los archivos estáticos en el directorio staticfiles.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
