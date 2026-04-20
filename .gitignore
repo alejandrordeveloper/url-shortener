@@ -1,0 +1,31 @@
+# Environment files (never commit secrets)
+.env
+.env.*
+!.env.example
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache/artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Build and packaging
+build/
+dist/
+*.egg-info/
+
+# Django local artifacts
+*.sqlite3
+db.sqlite3
+staticfiles/
+
+# VS Code and OS files
+.vscode/
+.DS_Store
+Thumbs.db
